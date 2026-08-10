@@ -10,6 +10,7 @@ import {
   Step5Cutover, 
   Step6CustomerArtifact 
 } from './steps';
+import DashboardLayout from '@/layouts/DashboardLayout';
 
 const Migration = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -30,23 +31,25 @@ const Migration = () => {
   };
 
   return (
-    <div className="w-full">
-      <SequenceMap
-        steps={6}
-        currentStep={currentStep}
-        onStepChange={handleStepChange}
-        canGoBack={canGoBack}
-        canCancel={canCancel}
-      />
-      <div className="mt-8">
-        {currentStep === 1 && <Step1SelectCohort onNext={handleStepChange} />}
-        {currentStep === 2 && <Step2ShadowRun onNext={handleStepChange} />}
-        {currentStep === 3 && <Step3ParityReport onNext={handleStepChange} />}
-        {currentStep === 4 && <Step4RouteResult onNext={handleStepChange} />}
-        {currentStep === 5 && <Step5Cutover onNext={handleStepChange} />}
-        {currentStep === 6 && <Step6CustomerArtifact onCancel={handleCancel} />}
+    <DashboardLayout>
+      <div className="w-full">
+        <SequenceMap
+          steps={6}
+          currentStep={currentStep}
+          onStepChange={handleStepChange}
+          canGoBack={canGoBack}
+          canCancel={canCancel}
+        />
+        <div className="mt-8">
+          {currentStep === 1 && <Step1SelectCohort onNext={handleStepChange} />}
+          {currentStep === 2 && <Step2ShadowRun onNext={handleStepChange} />}
+          {currentStep === 3 && <Step3ParityReport onNext={handleStepChange} />}
+          {currentStep === 4 && <Step4RouteResult onNext={handleStepChange} />}
+          {currentStep === 5 && <Step5Cutover onNext={handleStepChange} />}
+          {currentStep === 6 && <Step6CustomerArtifact onCancel={handleCancel} />}
+        </div>
       </div>
-    </div>
+    </DashboardLayout>
   );
 };
 

@@ -6,6 +6,21 @@ const Step1SelectCohort = ({ onNext }) => {
   const [selectedWorkflows, setSelectedWorkflows] = useState([]);
   const [selectedCohorts, setSelectedCohorts] = useState([]);
 
+  // Sample data for workflows and cohorts
+  const workflows = [
+    { id: 'wf-001', name: 'Invoice Processing' },
+    { id: 'wf-002', name: 'Purchase Order Matching' },
+    { id: 'wf-003', name: 'Employee Onboarding' },
+    { id: 'wf-004', name: 'Expense Report Approval' }
+  ];
+
+  const cohorts = [
+    { id: 'cohort-001', name: 'Q1 2024 Batch' },
+    { id: 'cohort-002', name: 'Q2 2024 Batch' },
+    { id: 'cohort-003', name: 'Q3 2024 Batch' },
+    { id: 'cohort-004', name: 'Q4 2024 Batch' }
+  ];
+
   const handleWorkflowSelect = (workflowId: string) => {
     setSelectedWorkflows(prev => [...prev, workflowId]);
   };

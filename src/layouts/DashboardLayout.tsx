@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 import {
   SidebarProvider,
   Sidebar,
@@ -6,11 +7,13 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
+  SidebarMenuButton,
   SidebarFooter,
 } from '@/components/ui/sidebar';
-import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
 
 const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.ReactNode }>) => {
+  const location = useLocation();
+
   return (
     <SidebarProvider>
       <Sidebar>
@@ -18,13 +21,16 @@ const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.React
           <span className="text-xs font-medium">Hypatos</span>
         </SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem isActive>
-            Dashboard
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild isActive={location.pathname === '/'}>
+              <Link to="/">Dashboard</Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>
-            Migration
+            <SidebarMenuButton asChild isActive={location.pathname === '/migration'}>
+              <Link to="/migration">Migration</Link>
+            </SidebarMenuButton>
           </SidebarMenuItem>
-          {/* Add more menu items as needed */}
         </SidebarMenu>
         <SidebarFooter>
           <span className="text-xs text-muted-foreground">v1.0.0</span>
