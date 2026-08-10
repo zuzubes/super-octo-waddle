@@ -15,44 +15,46 @@ const Step6CustomerArtifact = ({ onCancel }) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h3 className="text-lg font-medium text-gray-800 mb-4">Reports</h3>
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="mb-7">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 6</p>
+        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Reports</h3>
+      </div>
 
-      <div className="border border-gray-300 p-4 rounded-md mb-6">
-        <h4 className="font-medium text-gray-800">Migration Report</h4>
-        <div className="mt-2 p-3 bg-gray-50 rounded-md">
-          <p className="text-xs text-gray-600 mb-2">Generated: 2024-01-15 10:30:00 UTC</p>
-          <p className="text-xs text-gray-600 mb-2">Match Rate: 92.5%</p>
-          <p className="text-xs text-gray-600 mb-2">Flagged Workflows: 2</p>
-          <p className="text-xs text-gray-600 mb-2">Total Documents: 1,247</p>
+      <div className="mb-6 rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <h4 className="text-sm font-semibold text-slate-800">Migration report</h4>
+        <div className="mt-3 space-y-1.5">
+          <p className="text-xs text-slate-500">Generated: 2024-01-15 10:30:00 UTC</p>
+          <p className="text-xs text-slate-500">Match rate: 92.5%</p>
+          <p className="text-xs text-slate-500">Flagged workflows: 2</p>
+          <p className="text-xs text-slate-500">Total documents: 1,247</p>
         </div>
       </div>
 
-      <div className="space-y-4">
+      {exportComplete && (
+        <div className="mb-6 rounded-xl border border-green-200 bg-green-50 px-4 py-3">
+          <p className="text-sm font-medium text-green-800">Report exported successfully!</p>
+        </div>
+      )}
+
+      <div className="flex items-center justify-between border-t border-slate-100 pt-5">
         <button
+          type="button"
           onClick={handleExport}
           disabled={isExporting || exportComplete}
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded-md"
+          className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
         >
-          {isExporting ? 'Exporting...' : exportComplete ? 'Exported' : 'Export Report'}
+          {isExporting ? 'Exporting…' : exportComplete ? 'Exported' : 'Export Report'}
         </button>
-
-        {exportComplete && (
-          <div className="p-3 bg-green-50 rounded-md">
-            <p className="text-sm text-green-800">Report exported successfully!</p>
-          </div>
-        )}
-      </div>
-
-      <div className="mt-6">
         <button
+          type="button"
           onClick={onCancel}
-          className="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
+          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-300 hover:text-blue-600"
         >
           Close
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -16,14 +16,14 @@ const AnnouncementBanner = () => {
         <Sparkles className="h-5 w-5" />
       </span>
       <p className="flex-1 text-sm font-semibold sm:text-base">
-        Hypatos 3.0 released (LLM and specialized transformer), migrate your workflows now.
+        Hypatos 3.0: faster, efficient, more accurate document processing is ready for you. Legacy support ends Dec 2026.
       </p>
       <button
         type="button"
         onClick={() => navigate('/migration')}
         className="shrink-0 text-sm font-medium text-blue-100 transition hover:text-white hover:underline underline-offset-4"
       >
-        Get started
+        Get Started →
       </button>
       <button
         type="button"

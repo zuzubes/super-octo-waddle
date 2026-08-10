@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 
 const Step5Cutover = ({ onNext }) => {
-  const [cutoverConfirmed, setCutoverConfirmed] = useState(false);
   const [isPromoting, setIsPromoting] = useState(false);
 
   const handlePromote = () => {
@@ -15,42 +14,34 @@ const Step5Cutover = ({ onNext }) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h3 className="text-lg font-medium text-gray-800 mb-4">Rollback window</h3>
-
-      <div className="mb-6">
-        <p className="text-sm text-gray-600">
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="mb-7">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 5</p>
+        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Rollback window</h3>
+        <p className="mt-2 text-sm text-slate-500">
           Once workflow v2 is executed in production, legacy workflows are kept warm for 30 days with one-click rollback. Come back here to rollback.
         </p>
       </div>
 
-      <div className="border border-gray-300 p-4 rounded-md mb-6">
-        <h4 className="font-medium text-gray-800">Rollback Window</h4>
-        <p className="text-sm text-gray-600 mt-1">30 days remaining</p>
-        <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-blue-500 w-full transition-all duration-300" />
+      <div className="mb-8 rounded-xl border border-slate-200 bg-slate-50 p-4">
+        <h4 className="text-sm font-semibold text-slate-800">Time remaining</h4>
+        <p className="mt-1 text-xs text-slate-500">30 days remaining</p>
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-200">
+          <div className="h-full w-full rounded-full bg-blue-500 transition-all duration-300" />
         </div>
       </div>
 
-      <div className="space-y-4">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            className="mr-2"
-            onChange={e => setCutoverConfirmed(e.target.checked)}
-          />
-          <span className="text-sm text-gray-700">I confirm cutover to v2 production</span>
-        </label>
-
+      <div className="flex justify-end border-t border-slate-100 pt-5">
         <button
+          type="button"
           onClick={handlePromote}
-          disabled={!cutoverConfirmed || isPromoting}
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded-md"
+          disabled={isPromoting}
+          className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
         >
-          {isPromoting ? 'Promoting...' : 'Promote to Production'}
+          {isPromoting ? 'Promoting…' : 'Next'}
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -17,57 +17,62 @@ const Step3ParityReport = ({ onNext }) => {
   });
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h3 className="text-lg font-medium text-gray-800 mb-4">Parity Report</h3>
-
-      <div className="mb-6">
-        <p className="text-sm text-gray-600">
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+      <div className="mb-7">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 3</p>
+        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Parity report</h3>
+        <p className="mt-2 text-sm text-slate-500">
           Generated field-level diff report with match rate: {reportData.matchRate.toFixed(1)}%
         </p>
       </div>
 
-      <div className="mt-6">
-        <h4 className="text-sm font-medium text-gray-700">Field-Level Diffs</h4>
-        <table className="w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">Field</th>
-              <th className="px-4 py-2">Total</th>
-              <th className="px-4 py-2">Matched</th>
-              <th className="px-4 py-2">Mismatched</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reportData.divergedFields.map(field => (
-              <tr key={field.field}>
-                <td className="px-4 py-2">{field.field}</td>
-                <td className="px-4 py-2">{field.count}</td>
-                <td className="px-4 py-2">{field.matched}</td>
-                <td className="px-4 py-2">{field.mismatched}</td>
+      <div className="mb-6">
+        <h4 className="mb-3 text-sm font-semibold text-slate-800">Field-level diffs</h4>
+        <div className="overflow-hidden rounded-xl border border-slate-200">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-slate-100 bg-slate-50">
+                <th className="px-4 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">Field</th>
+                <th className="px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">Total</th>
+                <th className="px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">Matched</th>
+                <th className="px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">Mismatched</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {reportData.divergedFields.map(field => (
+                <tr key={field.field}>
+                  <td className="px-4 py-2.5 text-left text-sm font-medium text-slate-900">{field.field}</td>
+                  <td className="px-4 py-2.5 text-center text-sm text-slate-600">{field.count}</td>
+                  <td className="px-4 py-2.5 text-center text-sm text-slate-600">{field.matched}</td>
+                  <td className="px-4 py-2.5 text-center text-sm text-slate-600">{field.mismatched}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div className="mt-6">
-        <h4 className="text-sm font-medium text-gray-700">Flagged Workflows</h4>
-        <ul className="list-disc pl-4">
+      <div className="mb-8">
+        <h4 className="mb-3 text-sm font-semibold text-slate-800">Flagged workflows</h4>
+        <ul className="space-y-2">
           {reportData.flaggedWorkflows.map(wf => (
-            <li key={wf.id} className="mb-2">
-              <strong>{wf.id}</strong>: {wf.reason}
+            <li key={wf.id} className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm text-slate-600">
+              <span className="font-semibold text-slate-900">{wf.id}</span>: {wf.reason}
             </li>
           ))}
         </ul>
       </div>
 
-      <button
-        onClick={() => onNext(4)}
-        className="w-full bg-blue-500 text-white px-4 py-2 rounded-md"
-      >
-        Next
-      </button>
-    </div>
+      <div className="flex justify-end border-t border-slate-100 pt-5">
+        <button
+          type="button"
+          onClick={() => onNext(4)}
+          className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
+        >
+          Next
+        </button>
+      </div>
+    </section>
   );
 };
 
