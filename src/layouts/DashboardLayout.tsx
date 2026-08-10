@@ -8,7 +8,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarFooter,
 } from '@/components/ui/sidebar';
 
 const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.ReactNode }>) => {
@@ -17,8 +16,15 @@ const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.React
   return (
     <SidebarProvider>
       <Sidebar>
-        <SidebarHeader>
-          <span className="text-xs font-medium">Hypatos</span>
+        <SidebarHeader className="border-b border-slate-200/80 px-4 py-5">
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/hypatos-logo.jpeg"
+              alt="Hypatos"
+              className="h-9 w-9 rounded-xl object-cover"
+            />
+            <span className="text-base font-semibold tracking-tight text-slate-900">Hypatos</span>
+          </Link>
         </SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -32,9 +38,6 @@ const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.React
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <SidebarFooter>
-          <span className="text-xs text-muted-foreground">v1.0.0</span>
-        </SidebarFooter>
       </Sidebar>
       <SidebarInset className="p-6">
         {children}
