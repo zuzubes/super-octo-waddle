@@ -52,7 +52,7 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
 
   const getStepLabel = (step: number) => {
     const labels = [
-      'Select Cohort',
+      'Select Workflow',
       'Shadow Run',
       'Parity Report',
       'Route by Result',
@@ -124,7 +124,7 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
       <div className="mt-8 p-4 bg-gray-50 rounded-md">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">Step {currentStep}: {getStepLabel(currentStep)}</h3>
         <p className="text-gray-600">
-          {currentStep === 1 && 'Select the workflows and cohorts you want to migrate.'}
+          {currentStep === 1 && 'Select the workflows you want to migrate'}
           {currentStep === 2 && 'Run a shadow test to clone and replay workflows against historical documents.'}
           {currentStep === 3 && 'Generate parity report with field-level diff and match rates.'}
           {currentStep === 4 && 'Route workflows based on test results: pass to approval queue, fail to review.'}
