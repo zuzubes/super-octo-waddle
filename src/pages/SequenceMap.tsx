@@ -136,4 +136,5 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
   );
 };
 
+export { SequenceMap };
 export default SequenceMap;
