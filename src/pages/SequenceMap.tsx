@@ -121,17 +121,6 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
         </div>
       </div>
 
-      <div className="mt-8 p-4 bg-gray-50 rounded-md">
-        <h3 className="text-lg font-semibold text-gray-800 mb-2">Step {currentStep}: {getStepLabel(currentStep)}</h3>
-        <p className="text-gray-600">
-          {currentStep === 1 && 'Select the workflows you want to migrate'}
-          {currentStep === 2 && 'Run a shadow test to clone and replay workflows against historical documents.'}
-          {currentStep === 3 && 'Generate parity report with field-level diff and match rates.'}
-          {currentStep === 4 && 'Route workflows based on test results: pass to approval queue, fail to review.'}
-          {currentStep === 5 && 'Promote v2 to production with 30-day rollback window.'}
-          {currentStep === 6 && 'Export migration report as customer-facing artifact.'}
-        </p>
-      </div>
     </div>
   );
 };
