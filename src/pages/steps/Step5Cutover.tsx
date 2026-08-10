@@ -1,4 +1,4 @@
-// Step 5: Cutover + Rollback Window
+// Step 5: Rollback window
 
 import React, { useState } from 'react';
 
@@ -16,11 +16,11 @@ const Step5Cutover = ({ onNext }) => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h3 className="text-lg font-medium text-gray-800 mb-4">Cutover + Rollback Window</h3>
+      <h3 className="text-lg font-medium text-gray-800 mb-4">Rollback window</h3>
 
       <div className="mb-6">
         <p className="text-sm text-gray-600">
-          Promote v2 to production. Legacy workflows kept warm for 30 days with one-click rollback.
+          Once workflow v2 is executed in production, legacy workflows are kept warm for 30 days with one-click rollback. Come back here to rollback.
         </p>
       </div>
 

@@ -62,7 +62,7 @@ const Step3ParityReport = ({ onNext }) => {
       </div>
 
       <button
-        onClick={onNext}
+        onClick={() => onNext(4)}
         className="w-full bg-blue-500 text-white px-4 py-2 rounded-md"
       >
         Next

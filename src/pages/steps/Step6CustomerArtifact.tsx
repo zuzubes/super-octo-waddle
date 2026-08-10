@@ -1,4 +1,4 @@
-// Step 6: Customer-facing Artifact
+// Step 6: Reports
 
 import React, { useState } from 'react';
 
@@ -16,13 +16,7 @@ const Step6CustomerArtifact = ({ onCancel }) => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg">
-      <h3 className="text-lg font-medium text-gray-800 mb-4">Customer-facing Artifact</h3>
-
-      <div className="mb-6">
-        <p className="text-sm text-gray-600">
-          Export the parity report as the forwardable document for CS to send to the customer.
-        </p>
-      </div>
+      <h3 className="text-lg font-medium text-gray-800 mb-4">Reports</h3>
 
       <div className="border border-gray-300 p-4 rounded-md mb-6">
         <h4 className="font-medium text-gray-800">Migration Report</h4>
@@ -55,7 +49,7 @@ const Step6CustomerArtifact = ({ onCancel }) => {
           onClick={onCancel}
           className="w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-md"
         >
-          Cancel Migration
+          Close
         </button>
       </div>
     </div>

@@ -55,9 +55,9 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
       'Select Workflow',
       'Shadow Run',
       'Parity Report',
-      'Route by Result',
-      'Cutover + Rollback',
-      'Customer Artifact',
+      'Approval',
+      'Rollback window',
+      'Reports',
     ];
     return labels[step - 1] || `Step ${step}`;
   };
