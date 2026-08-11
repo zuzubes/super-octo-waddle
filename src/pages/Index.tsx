@@ -110,15 +110,25 @@ const Index = () => {
                       </td>
                       <td className="px-4 py-5 align-middle">
                         {isSalesOrder && migrationCompleted && (
-                          <button
-                            type="button"
-                            onClick={handleRollback}
-                            aria-label="Rollback Sales Order Management"
-                            title="Rollback workflow"
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-amber-200 bg-amber-50 text-amber-700 transition hover:border-amber-300 hover:bg-amber-100"
-                          >
-                            <RotateCcw className="h-5 w-5" />
-                          </button>
+                          <div className="group/rollback relative inline-flex">
+                            <button
+                              type="button"
+                              onClick={handleRollback}
+                              aria-label="Rollback Sales Order Management"
+                              aria-describedby="rollback-tooltip"
+                              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-amber-200 bg-amber-50 text-amber-700 transition hover:border-amber-300 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2"
+                            >
+                              <RotateCcw className="h-5 w-5" />
+                            </button>
+                            <span
+                              id="rollback-tooltip"
+                              role="tooltip"
+                              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-64 -translate-x-1/2 rounded-lg bg-slate-900 px-3 py-2 text-center text-xs font-medium leading-5 text-white opacity-0 shadow-lg transition-opacity group-hover/rollback:opacity-100 group-focus-within/rollback:opacity-100"
+                            >
+                              29 days 59 mins remaining to rollback to v1
+                              <span className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-x-4 border-t-4 border-x-transparent border-t-slate-900" />
+                            </span>
+                          </div>
                         )}
                       </td>
                       <td className="px-4 py-5 align-middle">
