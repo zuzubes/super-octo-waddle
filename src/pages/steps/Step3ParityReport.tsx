@@ -142,7 +142,7 @@ const Step3ParityReport = ({ onNext }: Step3ParityReportProps) => {
       <div className="mb-7">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 3</p>
         <div className="flex flex-wrap items-center gap-3">
-          <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Parity report</h3>
+          <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Parity checks</h3>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-violet-700">
             <GitCompareArrows className="h-3.5 w-3.5" />
             v1 vs v2
