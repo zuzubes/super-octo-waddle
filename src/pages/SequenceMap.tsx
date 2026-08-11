@@ -63,7 +63,9 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
   return (
     <div className="w-full rounded-lg bg-white p-6 shadow-lg">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-800">Migration Workflow</h2>
+        <h2 className="text-2xl font-bold text-gray-800">
+          Workflow migration assistant
+        </h2>
         <div className="flex gap-2">
           <button
             onClick={() => canGoBack && currentStep > 1 && onStepChange(currentStep - 1)}
