@@ -25,7 +25,9 @@ const navigationItems = [
   { label: 'Contact Us', href: '/contact-us', icon: MessageCircle },
 ];
 
-const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.ReactNode }>) => {
+const DashboardLayout = ({
+  children,
+}: PropsWithChildren<{ children: React.ReactNode }>) => {
   const location = useLocation();
 
   return (
@@ -54,7 +56,9 @@ const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.React
               >
                 <Link to={href} title={label}>
                   <Icon className="h-5 w-5 shrink-0" />
-                  <span className="group-data-[collapsible=icon]:hidden">{label}</span>
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    {label}
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -71,11 +75,13 @@ const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.React
               >
                 <Link to="/settings" title="Settings">
                   <Settings className="h-5 w-5 shrink-0" />
-                  <span className="group-data-[collapsible=icon]:hidden">Settings</span>
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Settings
+                  </span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-          </Sidebar>
+          </SidebarMenu>
 
           <p className="mt-3 px-3 text-xs font-medium text-slate-400 group-data-[collapsible=icon]:hidden">
             v14.34.0
