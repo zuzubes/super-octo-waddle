@@ -1,5 +1,3 @@
-// Step 1: Select Workflow
-
 import React, { useState } from 'react';
 
 interface Step1SelectWorkflowProps {
@@ -20,7 +18,7 @@ const Step1SelectCohort = ({ onNext }: Step1SelectWorkflowProps) => {
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-7">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 1</p>
-        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Select workflow</h3>
+        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Select the workflow you want to migrate</h3>
         <p className="mt-2 text-sm text-slate-500">Select the workflows you want to migrate</p>
       </div>
 
