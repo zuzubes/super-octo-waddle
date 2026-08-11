@@ -73,19 +73,19 @@ const Index = () => {
             </colgroup>
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50/80">
-                <th className="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:px-6">
+                <th className="px-5 py-4 text-center text-xs font-semibold uppercase tracking-wide text-slate-500 sm:px-6">
                   Workflow name
                 </th>
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <th className="px-4 py-4 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Version
                 </th>
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <th className="px-4 py-4 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Last executed on
                 </th>
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <th className="px-4 py-4 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Action
                 </th>
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <th className="px-4 py-4 text-center text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Report
                 </th>
               </tr>
