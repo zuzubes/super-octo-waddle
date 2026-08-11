@@ -1,5 +1,3 @@
-// Step 4: Approval
-
 import React, { useState } from 'react';
 
 interface Step4RouteResultProps {
@@ -9,9 +7,9 @@ interface Step4RouteResultProps {
 const options = [
   {
     id: 'approve',
-    title: 'Approve',
+    title: 'Ready to be executed',
     description: 'Queue for customer approval and sign-off',
-    helper: "Once it's approved, manually stop the existing workflow and start the workflow v2",
+    helper: "Once it's approved. manually stop the existing workflow and start the workflow vs with the same name from the dashboard",
   },
   {
     id: 'review',
