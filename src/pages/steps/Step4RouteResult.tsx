@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Step4RouteResultProps {
   onNext: (step: number) => void;
@@ -21,6 +22,7 @@ const options = [
 
 const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
   const [routingDecision, setRoutingDecision] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -73,10 +75,10 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
         <button
           type="button"
           disabled={!routingDecision}
-          onClick={() => routingDecision && onNext(4)}
+          onClick={() => routingDecision && navigate('/')}
           className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
         >
-          Complete
+          Finish
         </button>
       </div>
     </section>
