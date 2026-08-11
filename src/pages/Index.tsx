@@ -102,7 +102,9 @@ const Index = () => {
                       </td>
                       <td className="px-4 py-5 align-middle">
                         <span className="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
-                          {workflow.version}
+                          {isSalesOrder && migrationCompleted
+                            ? 'v2'
+                            : workflow.version}
                         </span>
                       </td>
                       <td className="px-4 py-5 align-middle text-sm text-slate-600">
