@@ -8,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 
 const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.ReactNode }>) => {
@@ -39,8 +40,16 @@ const DashboardLayout = ({ children }: PropsWithChildren<{ children: React.React
           </SidebarMenuItem>
         </SidebarMenu>
       </Sidebar>
-      <SidebarInset className="p-6">
-        {children}
+      <SidebarInset className="min-w-0">
+        <div className="flex min-h-14 items-center border-b border-slate-200/80 px-4 sm:px-6">
+          <SidebarTrigger
+            className="rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+            aria-label="Toggle navigation menu"
+          />
+        </div>
+        <main className="p-4 sm:p-6">
+          {children}
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );
