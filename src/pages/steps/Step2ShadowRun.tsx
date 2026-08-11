@@ -1,5 +1,3 @@
-// Step 2: Shadow Run
-
 import React, { useRef, useState } from 'react';
 import { Check, FileUp, History } from 'lucide-react';
 
@@ -9,6 +7,7 @@ interface Step2ShadowRunProps {
 
 const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
   const [isRunning, setIsRunning] = useState(false);
+  const [hasRun, setHasRun] = useState(false);
   const [progress, setProgress] = useState(0);
   const [testDocument, setTestDocument] = useState<File | null>(null);
   const [documentSource, setDocumentSource] = useState<'history' | 'upload'>('history');
@@ -16,6 +15,7 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
 
   const startShadowRun = () => {
     setIsRunning(true);
+    setHasRun(true);
     setProgress(0);
     let current = 0;
 
@@ -36,6 +36,7 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
     if (file) {
       setTestDocument(file);
       setDocumentSource('upload');
+      setHasRun(false);
     }
   };
 
@@ -75,6 +76,7 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
             onClick={() => {
               setDocumentSource('history');
               setTestDocument(null);
+              setHasRun(false);
             }}
             className={`flex items-start gap-3 rounded-xl border p-4 text-left transition-all ${
               documentSource === 'history'
@@ -156,14 +158,22 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
           type="button"
           onClick={startShadowRun}
           disabled={isRunning || (documentSource === 'upload' && !testDocument)}
-          className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
+          className={`rounded-xl px-5 py-2.5 text-sm font-semibold shadow-sm transition ${
+            hasRun
+              ? 'bg-slate-300 text-slate-600'
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+          } disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400`}
         >
-          {isRunning ? 'Running…' : 'Test Run'}
+          {isRunning ? 'Running…' : hasRun ? 'Test Run Complete' : 'Test Run'}
         </button>
         <button
           type="button"
           onClick={() => onNext(3)}
-          className="rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-blue-300 hover:text-blue-600"
+          className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition ${
+            hasRun
+              ? 'bg-blue-600 text-white shadow-sm hover:bg-blue-700'
+              : 'border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600'
+          }`}
         >
           Continue to parity report
         </button>
