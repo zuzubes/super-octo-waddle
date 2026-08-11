@@ -1,5 +1,14 @@
-import React from 'react';
-import { AlertTriangle, CheckCircle2, CircleDot, GitCompareArrows, Sparkles, XCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  AlertTriangle,
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  CircleDot,
+  GitCompareArrows,
+  Sparkles,
+  XCircle,
+} from 'lucide-react';
 
 interface Step3ParityReportProps {
   onNext: (step: number) => void;
@@ -16,6 +25,7 @@ interface WorkflowAgent {
   v2Status: AgentStatus;
   v1Duration: string;
   v2Duration: string;
+  reviewAreas?: string[];
 }
 
 const agents: WorkflowAgent[] = [
@@ -38,6 +48,7 @@ const agents: WorkflowAgent[] = [
     v2Status: 'Completed with differences',
     v1Duration: '21s',
     v2Duration: '24s',
+    reviewAreas: ['Line-item extraction output', 'Quantity and unit-of-measure handling'],
   },
   {
     name: 'delivery_exception_handler',
@@ -68,6 +79,7 @@ const agents: WorkflowAgent[] = [
     v2Status: 'Completed with differences',
     v1Duration: '3s',
     v2Duration: '4s',
+    reviewAreas: ['Customer identification result', 'Enriched customer metadata'],
   },
   {
     name: 'shipping_address_enrichment',
@@ -88,6 +100,7 @@ const agents: WorkflowAgent[] = [
     v2Status: 'Completed with differences',
     v1Duration: '66s',
     v2Duration: '61s',
+    reviewAreas: ['Matched product selection', 'Product confidence and fallback behavior'],
   },
   {
     name: 'quote_line_matching',
@@ -108,29 +121,28 @@ const statusStyles: Record<AgentStatus, string> = {
 };
 
 const StatusIcon = ({ status }: { status: AgentStatus }) => {
-  if (status === 'Completed') {
-    return <CheckCircle2 className="h-4 w-4" />;
-  }
-
-  if (status === 'Failed') {
-    return <XCircle className="h-4 w-4" />;
-  }
-
+  if (status === 'Completed') return <CheckCircle2 className="h-4 w-4" />;
+  if (status === 'Failed') return <XCircle className="h-4 w-4" />;
   return <AlertTriangle className="h-4 w-4" />;
 };
 
 const Step3ParityReport = ({ onNext }: Step3ParityReportProps) => {
+  const [showReviewOnly, setShowReviewOnly] = useState(false);
+  const [expandedAgent, setExpandedAgent] = useState<string | null>(null);
+
   const matchingAgents = agents.filter((agent) => agent.v1Status === agent.v2Status).length;
   const agentsWithDifferences = agents.length - matchingAgents;
   const customizedAgents = agents.filter((agent) => agent.customized).length;
-  const v2Successes = agents.filter((agent) => agent.v2Status !== 'Failed').length;
+  const displayedAgents = showReviewOnly
+    ? agents.filter((agent) => agent.v1Status !== agent.v2Status)
+    : agents;
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-7">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 3</p>
         <div className="flex flex-wrap items-center gap-3">
-          <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Agent run comparison</h3>
+          <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Parity report</h3>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-violet-700">
             <GitCompareArrows className="h-3.5 w-3.5" />
             v1 vs v2
@@ -154,10 +166,23 @@ const Step3ParityReport = ({ onNext }: Step3ParityReportProps) => {
           <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">Matching runs</p>
           <p className="mt-2 text-2xl font-bold text-emerald-800">{matchingAgents}</p>
         </div>
-        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-amber-600">Need review</p>
+        <button
+          type="button"
+          onClick={() => setShowReviewOnly((current) => !current)}
+          className={`rounded-xl border p-4 text-left transition hover:-translate-y-0.5 ${
+            showReviewOnly
+              ? 'border-amber-400 bg-amber-100 ring-2 ring-amber-200'
+              : 'border-amber-200 bg-amber-50 hover:border-amber-400'
+          }`}
+          aria-pressed={showReviewOnly}
+        >
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-amber-600">Need review</p>
+            {showReviewOnly ? <ChevronDown className="h-4 w-4 text-amber-700" /> : <ChevronRight className="h-4 w-4 text-amber-700" />}
+          </div>
           <p className="mt-2 text-2xl font-bold text-amber-800">{agentsWithDifferences}</p>
-        </div>
+          <p className="mt-1 text-xs font-medium text-amber-700">Click to view more details</p>
+        </button>
       </div>
 
       <div className="mb-6 flex items-start gap-3 rounded-xl border border-blue-200 bg-blue-50 px-4 py-4">
@@ -165,15 +190,21 @@ const Step3ParityReport = ({ onNext }: Step3ParityReportProps) => {
         <div>
           <p className="text-sm font-semibold text-blue-900">Workflow run completed in v2</p>
           <p className="mt-1 text-sm leading-6 text-blue-800">
-            {v2Successes} of {agents.length} agents completed successfully in v2. Differences are reported at the agent run level rather than by individual fields.
+            8 of 8 agents completed successfully in v2. Differences are reported at the agent run level for review and necessary action.
           </p>
         </div>
       </div>
 
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h4 className="text-sm font-semibold text-slate-800">Workflow agents</h4>
-          <p className="mt-1 text-xs text-slate-500">Agentic agents contain custom workflow logic.</p>
+          <h4 className="text-sm font-semibold text-slate-800">
+            {showReviewOnly ? 'Agents needing review' : 'Workflow agents'}
+          </h4>
+          <p className="mt-1 text-xs text-slate-500">
+            {showReviewOnly
+              ? 'Expand an agent to see the areas that need review.'
+              : 'Agentic agents contain custom workflow logic. Click Need review above to filter differences.'}
+          </p>
         </div>
         <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-200 bg-violet-50 px-3 py-1.5 text-xs font-semibold text-violet-700">
           <Sparkles className="h-3.5 w-3.5" />
@@ -189,53 +220,74 @@ const Step3ParityReport = ({ onNext }: Step3ParityReportProps) => {
         </div>
 
         <div className="divide-y divide-slate-100">
-          {agents.map((agent) => {
+          {displayedAgents.map((agent) => {
             const hasDifference = agent.v1Status !== agent.v2Status;
+            const isExpanded = expandedAgent === agent.name;
 
             return (
-              <div
-                key={agent.name}
-                className={`grid gap-4 px-4 py-4 md:grid-cols-[minmax(220px,1.5fr)_minmax(140px,1fr)_minmax(140px,1fr)] ${
-                  hasDifference ? 'bg-amber-50/40' : 'bg-white'
-                }`}
-              >
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="break-all text-sm font-semibold text-slate-900">{agent.name}</span>
-                    <span className="text-xs text-slate-400">({agent.version})</span>
-                    <span
-                      className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
-                        agent.customized
-                          ? 'bg-violet-100 text-violet-700'
-                          : 'bg-blue-100 text-blue-700'
-                      }`}
-                    >
-                      {agent.type}
-                    </span>
-                    {agent.customized && <Sparkles className="h-3.5 w-3.5 text-violet-500" />}
+              <div key={agent.name} className={hasDifference ? 'bg-amber-50/40' : 'bg-white'}>
+                <div className="grid gap-4 px-4 py-4 md:grid-cols-[minmax(220px,1.5fr)_minmax(140px,1fr)_minmax(140px,1fr)]">
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      {hasDifference ? (
+                        <button
+                          type="button"
+                          onClick={() => setExpandedAgent(isExpanded ? null : agent.name)}
+                          className="rounded-md p-0.5 text-amber-700 hover:bg-amber-100"
+                          aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${agent.name} review details`}
+                        >
+                          {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                        </button>
+                      ) : (
+                        <span className="w-5" />
+                      )}
+                      <span className="break-all text-sm font-semibold text-slate-900">{agent.name}</span>
+                      <span className="text-xs text-slate-400">({agent.version})</span>
+                      <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${agent.customized ? 'bg-violet-100 text-violet-700' : 'bg-blue-100 text-blue-700'}`}>
+                        {agent.type}
+                      </span>
+                      {agent.customized && <Sparkles className="h-3.5 w-3.5 text-violet-500" />}
+                    </div>
+                    <p className="mt-1 pl-5 text-xs text-slate-500">
+                      {agent.customized ? 'Customized workflow agent' : 'Standard workflow agent'}
+                    </p>
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">
-                    {agent.customized ? 'Customized workflow agent' : 'Standard workflow agent'}
-                  </p>
+
+                  <div>
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 md:hidden">v1 run result</p>
+                    <span className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold ${statusStyles[agent.v1Status]}`}>
+                      <StatusIcon status={agent.v1Status} />
+                      {agent.v1Status}
+                    </span>
+                    <p className="mt-1 text-xs text-slate-500">Completed in {agent.v1Duration}</p>
+                  </div>
+
+                  <div>
+                    <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 md:hidden">v2 run result</p>
+                    <span className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold ${statusStyles[agent.v2Status]}`}>
+                      <StatusIcon status={agent.v2Status} />
+                      {agent.v2Status}
+                    </span>
+                    <p className="mt-1 text-xs text-slate-500">Completed in {agent.v2Duration}</p>
+                  </div>
                 </div>
 
-                <div>
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 md:hidden">v1 run result</p>
-                  <span className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold ${statusStyles[agent.v1Status]}`}>
-                    <StatusIcon status={agent.v1Status} />
-                    {agent.v1Status}
-                  </span>
-                  <p className="mt-1 text-xs text-slate-500">Completed in {agent.v1Duration}</p>
-                </div>
-
-                <div>
-                  <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 md:hidden">v2 run result</p>
-                  <span className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-semibold ${statusStyles[agent.v2Status]}`}>
-                    <StatusIcon status={agent.v2Status} />
-                    {agent.v2Status}
-                  </span>
-                  <p className="mt-1 text-xs text-slate-500">Completed in {agent.v2Duration}</p>
-                </div>
+                {hasDifference && isExpanded && (
+                  <div className="border-t border-amber-200 bg-amber-100/60 px-4 py-4 pl-9">
+                    <p className="text-xs font-bold uppercase tracking-wide text-amber-800">Areas needing review</p>
+                    <ul className="mt-2 space-y-2">
+                      {agent.reviewAreas?.map((area) => (
+                        <li key={area} className="flex items-start gap-2 text-sm text-amber-900">
+                          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
+                          {area}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-xs text-amber-800">
+                      v1 and v2 both completed, but the run results differ in the areas listed above.
+                    </p>
+                  </div>
+                )}
               </div>
             );
           })}
