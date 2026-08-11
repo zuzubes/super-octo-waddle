@@ -34,7 +34,7 @@ const DashboardLayout = ({
     <SidebarProvider>
       <Sidebar collapsible="icon">
         <SidebarHeader className="flex h-14 items-center border-b border-slate-200/80 px-4 group-data-[collapsible=icon]:px-2">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex w-full items-center justify-start gap-3">
             <img
               src="/hypatos-logo.jpeg"
               alt="Hypatos"
