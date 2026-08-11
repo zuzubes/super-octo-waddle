@@ -7,9 +7,9 @@ interface Step4RouteResultProps {
 const options = [
   {
     id: 'approve',
-    title: 'Ready to be executed',
-    description: 'Queue for customer approval and sign-off',
-    helper: "Once it's approved. manually stop the existing workflow and start the workflow vs with the same name from the dashboard",
+    title: 'Approve',
+    description: 'Ready to be executed',
+    helper: "Once it's approved, go to dashboard, stop the existing workflow and start the v2 version of the workflow",
   },
   {
     id: 'review',
@@ -25,9 +25,15 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-7">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 4</p>
-        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Approval</h3>
-        <p className="mt-2 text-sm text-slate-500">Based on parity report results, route workflows for approval or review</p>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">
+          Step 4
+        </p>
+        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">
+          Approval
+        </h3>
+        <p className="mt-2 text-sm text-slate-500">
+          Based on parity report results, route workflows for approval or review
+        </p>
       </div>
 
       <div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -45,9 +51,15 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
                   : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50/40'
               }`}
             >
-              <span className="text-sm font-semibold text-slate-900">{option.title}</span>
-              <span className="mt-1 text-xs text-slate-500">{option.description}</span>
-              <span className="mt-3 text-xs text-slate-400">{option.helper}</span>
+              <span className="text-sm font-semibold text-slate-900">
+                {option.title}
+              </span>
+              <span className="mt-1 text-xs text-slate-500">
+                {option.description}
+              </span>
+              <span className="mt-3 text-xs text-slate-400">
+                {option.helper}
+              </span>
             </button>
           );
         })}
