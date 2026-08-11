@@ -29,7 +29,7 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
       case 'active':
         return <Clock className="h-6 w-6 text-blue-500" />;
       case 'pending':
-        return <Circle className="h-6 w-6 text-gray-400 />;
+        return <Circle className="h-6 w-6 text-gray-400" />;
       default:
         return <Circle className="h-6 w-6 text-gray-400" />;
     }
