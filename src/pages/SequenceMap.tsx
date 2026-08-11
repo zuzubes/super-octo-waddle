@@ -1,5 +1,3 @@
-// SequenceMap Component
-
 import React from 'react';
 import { CheckCircle, Circle, Clock } from 'lucide-react';
 
@@ -31,7 +29,7 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
       case 'active':
         return <Clock className="h-6 w-6 text-blue-500" />;
       case 'pending':
-        return <Circle className="h-6 w-6 text-gray-400" />;
+        return <Circle className="h-6 w-6 text-gray-400 />;
       default:
         return <Circle className="h-6 w-6 text-gray-400" />;
     }
@@ -52,7 +50,7 @@ const SequenceMap: React.FC<SequenceMapProps> = ({
 
   const getStepLabel = (step: number) => {
     const labels = [
-      'Select Workflow',
+      'Workflow selection',
       'Shadow Run',
       'Parity checks',
       'Approval',
