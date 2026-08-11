@@ -36,7 +36,7 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
         </p>
       </div>
 
-      <div className="mb-8 grid grid-cols-1 gap-3 md:grid-cols-2">
+      <div className="mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
         {options.map((option) => {
           const isSelected = routingDecision === option.id;
 
@@ -65,14 +65,18 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
         })}
       </div>
 
+      <p className="mb-8 text-sm leading-6 text-slate-500">
+        Once workflow v2 is approved and executed in production, legacy workflows are kept warm for 30 days with one-click rollback.
+      </p>
+
       <div className="flex justify-end border-t border-slate-100 pt-5">
         <button
           type="button"
           disabled={!routingDecision}
-          onClick={() => routingDecision && onNext(5)}
+          onClick={() => routingDecision && onNext(4)}
           className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
         >
-          Next
+          Complete
         </button>
       </div>
     </section>

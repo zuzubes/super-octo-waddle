@@ -1,14 +1,10 @@
-// Migration Page Component
-
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SequenceMap } from './SequenceMap';
-import { 
-  Step1SelectCohort, 
-  Step2ShadowRun, 
-  Step3ParityReport, 
-  Step4RouteResult, 
-  Step5Cutover, 
-  Step6CustomerArtifact 
+import {
+  Step1SelectCohort,
+  Step2ShadowRun,
+  Step3ParityReport,
+  Step4RouteResult,
 } from './steps';
 import DashboardLayout from '@/layouts/DashboardLayout';
 
@@ -23,7 +19,7 @@ const Migration = () => {
     } else {
       setCanGoBack(false);
     }
-    setCurrentStep(step);
+    setCurrentStep(Math.min(step, 4));
   };
 
   const handleCancel = () => {
@@ -34,7 +30,7 @@ const Migration = () => {
     <DashboardLayout>
       <div className="w-full">
         <SequenceMap
-          steps={6}
+          steps={4}
           currentStep={currentStep}
           onStepChange={handleStepChange}
           canGoBack={canGoBack}
@@ -45,8 +41,6 @@ const Migration = () => {
           {currentStep === 2 && <Step2ShadowRun onNext={handleStepChange} />}
           {currentStep === 3 && <Step3ParityReport onNext={handleStepChange} />}
           {currentStep === 4 && <Step4RouteResult onNext={handleStepChange} />}
-          {currentStep === 5 && <Step5Cutover onNext={handleStepChange} />}
-          {currentStep === 6 && <Step6CustomerArtifact onCancel={handleCancel} />}
         </div>
       </div>
     </DashboardLayout>
