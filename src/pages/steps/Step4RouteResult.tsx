@@ -24,6 +24,13 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
   const [routingDecision, setRoutingDecision] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const handleFinish = () => {
+    if (!routingDecision) return;
+
+    window.localStorage.setItem('salesOrderMigrationCompleted', 'true');
+    navigate('/');
+  };
+
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-7">
@@ -75,7 +82,7 @@ const Step4RouteResult = ({ onNext }: Step4RouteResultProps) => {
         <button
           type="button"
           disabled={!routingDecision}
-          onClick={() => routingDecision && navigate('/')}
+          onClick={handleFinish}
           className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
         >
           Finish

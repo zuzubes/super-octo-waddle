@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
+import { ChevronDown, ChevronRight, RotateCcw } from 'lucide-react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
+import { showSuccess } from '@/utils/toast';
 
 const workflows = [
   {
@@ -25,6 +28,21 @@ const workflows = [
 ];
 
 const Index = () => {
+  const [migrationCompleted, setMigrationCompleted] = useState(false);
+  const [reportExpanded, setReportExpanded] = useState(false);
+
+  useEffect(() => {
+    setMigrationCompleted(
+      window.localStorage.getItem('salesOrderMigrationCompleted') === 'true',
+    );
+  }, []);
+
+  const handleRollback = () => {
+    window.localStorage.removeItem('salesOrderMigrationCompleted');
+    setMigrationCompleted(false);
+    showSuccess('Sales Order Management has been rolled back.');
+  };
+
   return (
     <DashboardLayout>
       <AnnouncementBanner />
@@ -43,7 +61,7 @@ const Index = () => {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[680px] text-left">
+          <table className="w-full min-w-[780px] text-left">
             <thead>
               <tr className="border-b border-slate-200 bg-slate-50/80">
                 <th className="px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-slate-500 sm:px-6">
@@ -64,26 +82,96 @@ const Index = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {workflows.map((workflow) => (
-                <tr
-                  key={workflow.name}
-                  className="transition-colors hover:bg-blue-50/30"
-                >
-                  <td className="px-5 py-4 text-sm font-semibold text-slate-900 sm:px-6">
-                    {workflow.name}
-                  </td>
-                  <td className="px-5 py-4">
-                    <span className="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
-                      {workflow.version}
-                    </span>
-                  </td>
-                  <td className="px-5 py-4 text-sm text-slate-600">
-                    {workflow.lastExecuted}
-                  </td>
-                  <td className="px-5 py-4" />
-                  <td className="px-5 py-4" />
-                </tr>
-              ))}
+              {workflows.map((workflow) => {
+                const isSalesOrder =
+                  workflow.name === 'Sales Order Management';
+
+                return (
+                  <tbody key={workflow.name}>
+                    <tr className="transition-colors hover:bg-blue-50/30">
+                      <td className="px-5 py-4 text-sm font-semibold text-slate-900 sm:px-6">
+                        {workflow.name}
+                      </td>
+                      <td className="px-5 py-4">
+                        <span className="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                          {workflow.version}
+                        </span>
+                      </td>
+                      <td className="px-5 py-4 text-sm text-slate-600">
+                        {workflow.lastExecuted}
+                      </td>
+                      <td className="px-5 py-4">
+                        {isSalesOrder && migrationCompleted && (
+                          <button
+                            type="button"
+                            onClick={handleRollback}
+                            aria-label="Rollback Sales Order Management"
+                            title="Rollback workflow"
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-amber-200 bg-amber-50 text-amber-700 transition hover:border-amber-300 hover:bg-amber-100"
+                          >
+                            <RotateCcw className="h-4 w-4" />
+                          </button>
+                        )}
+                      </td>
+                      <td className="px-5 py-4">
+                        {isSalesOrder && (
+                          <button
+                            type="button"
+                            onClick={() => setReportExpanded((expanded) => !expanded)}
+                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 transition hover:text-blue-800"
+                            aria-expanded={reportExpanded}
+                          >
+                            {reportExpanded ? (
+                              <ChevronDown className="h-4 w-4" />
+                            ) : (
+                              <ChevronRight className="h-4 w-4" />
+                            )}
+                            View Report
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+
+                    {isSalesOrder && reportExpanded && (
+                      <tr className="bg-blue-50/50">
+                        <td colSpan={5} className="px-5 py-5 sm:px-6">
+                          <div className="rounded-xl border border-blue-100 bg-white p-4">
+                            <h3 className="text-sm font-semibold text-slate-900">
+                              Sales Order Management run details
+                            </h3>
+                            <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                              <div className="rounded-lg bg-slate-50 p-3">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                  v1 run
+                                </p>
+                                <p className="mt-1 text-sm font-medium text-emerald-700">
+                                  Completed in 21s
+                                </p>
+                              </div>
+                              <div className="rounded-lg bg-slate-50 p-3">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                  v2 run
+                                </p>
+                                <p className="mt-1 text-sm font-medium text-amber-700">
+                                  Completed with differences in 24s
+                                </p>
+                              </div>
+                              <div className="rounded-lg bg-slate-50 p-3">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                  Agents reviewed
+                                </p>
+                                <p className="mt-1 text-sm font-medium text-slate-700">
+                                  8 agents evaluated
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                );
+              })}
             </tbody>
           </table>
         </div>
