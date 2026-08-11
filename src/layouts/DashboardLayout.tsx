@@ -33,7 +33,7 @@ const DashboardLayout = ({
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon">
-        <SidebarHeader className="border-b border-slate-200/80 px-4 py-5 group-data-[collapsible=icon]:px-2">
+        <SidebarHeader className="flex h-14 items-center border-b border-slate-200/80 px-4 group-data-[collapsible=icon]:px-2">
           <Link to="/" className="flex items-center gap-3">
             <img
               src="/hypatos-logo.jpeg"
@@ -90,7 +90,7 @@ const DashboardLayout = ({
       </Sidebar>
 
       <SidebarInset className="min-w-0">
-        <div className="flex min-h-14 items-center border-b border-slate-200/80 px-4 sm:px-6">
+        <div className="flex h-14 items-center border-b border-slate-200/80 px-4 sm:px-6">
           <SidebarTrigger
             className="rounded-lg text-slate-600 hover:bg-blue-50 hover:text-blue-700"
             aria-label="Toggle navigation menu"
