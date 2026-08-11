@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState } from 'react';
-import { ChevronDown, ChevronRight, RotateCcw } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import { showSuccess } from '@/utils/toast';
@@ -28,6 +29,7 @@ const workflows = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
   const [migrationCompleted, setMigrationCompleted] = useState(false);
   const [reportExpanded, setReportExpanded] = useState(false);
 
@@ -81,7 +83,7 @@ const Index = () => {
                   Last executed on
                 </th>
                 <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                  Rollback
+                  Action
                 </th>
                 <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Report
@@ -93,6 +95,8 @@ const Index = () => {
               {workflows.map((workflow) => {
                 const isSalesOrder =
                   workflow.name === 'Sales Order Management';
+                const isUpgraded = isSalesOrder && migrationCompleted;
+                const displayedVersion = isUpgraded ? 'v2' : workflow.version;
 
                 return (
                   <Fragment key={workflow.name}>
@@ -102,35 +106,37 @@ const Index = () => {
                       </td>
                       <td className="px-4 py-5 align-middle">
                         <span className="inline-flex rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
-                          {isSalesOrder && migrationCompleted
-                            ? 'v2'
-                            : workflow.version}
+                          {displayedVersion}
                         </span>
                       </td>
                       <td className="px-4 py-5 align-middle text-sm text-slate-600">
                         {workflow.lastExecuted}
                       </td>
                       <td className="px-4 py-5 align-middle">
-                        {isSalesOrder && migrationCompleted && (
-                          <div className="group/rollback relative inline-flex">
-                            <button
-                              type="button"
-                              onClick={handleRollback}
-                              aria-label="Rollback Sales Order Management"
-                              aria-describedby="rollback-tooltip"
-                              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-amber-200 bg-amber-50 text-amber-700 transition hover:border-amber-300 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2"
-                            >
-                              <RotateCcw className="h-5 w-5" />
-                            </button>
-                            <span
-                              id="rollback-tooltip"
-                              role="tooltip"
-                              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-64 -translate-x-1/2 rounded-lg bg-slate-900 px-3 py-2 text-center text-xs font-medium leading-5 text-white opacity-0 shadow-lg transition-opacity group-hover/rollback:opacity-100 group-focus-within/rollback:opacity-100"
-                            >
-                              29 days 59 mins remaining to rollback to v1
-                              <span className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 border-x-4 border-t-4 border-x-transparent border-t-slate-900" />
-                            </span>
-                          </div>
+                        {displayedVersion === 'v1' && (
+                          <button
+                            type="button"
+                            onClick={() => navigate('/migration')}
+                            className="rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2"
+                          >
+                            Upgrade
+                          </button>
+                        )}
+
+                        {isUpgraded && (
+                          <button
+                            type="button"
+                            onClick={handleRollback}
+                            className="rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2 text-xs font-semibold text-amber-700 transition hover:border-amber-300 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2"
+                          >
+                            Rollback
+                          </button>
+                        )}
+
+                        {workflow.version === 'v2' && !isUpgraded && (
+                          <span className="text-sm font-semibold text-slate-500">
+                            Upgraded
+                          </span>
                         )}
                       </td>
                       <td className="px-4 py-5 align-middle">
