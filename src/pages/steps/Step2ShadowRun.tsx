@@ -34,14 +34,28 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
     <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
       <div className="mb-7">
         <p className="mb-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-600">Step 2</p>
-        <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Shadow run</h3>
-        <p className="mt-2 text-sm text-slate-500">Clone the workflow and replay it against historical documents</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <h3 className="text-2xl font-semibold tracking-tight text-slate-900">Shadow run</h3>
+          <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-blue-700">
+            Running in v2
+          </span>
+        </div>
+        <p className="mt-2 text-sm text-slate-500">
+          Test the upgraded workflow using the most recent document from your v1 history.
+        </p>
+      </div>
+
+      <div className="mb-6 rounded-xl border border-blue-200 bg-blue-50 px-4 py-4">
+        <p className="text-sm font-semibold text-blue-900">Your workflow is now running in v2</p>
+        <p className="mt-1 text-sm leading-6 text-blue-800">
+          We will use the last document processed by the v1 workflow from its history as the test document, then replay it through the v2 workflow for comparison.
+        </p>
       </div>
 
       <div className="mb-8">
         <div className="mb-3 flex items-center justify-between">
           <h4 className="text-sm font-semibold text-slate-800">Test document</h4>
-          <span className="text-xs text-slate-400">{testDocument ? testDocument.name : 'Optional for this demo'}</span>
+          <span className="text-xs text-slate-400">{testDocument ? testDocument.name : 'Latest document from v1 history'}</span>
         </div>
         <button
           type="button"
@@ -49,9 +63,9 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
           className="flex w-full flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center transition hover:border-blue-300 hover:bg-blue-50/40"
         >
           <span className="text-sm font-semibold text-slate-700">
-            {testDocument ? testDocument.name : 'Click to add a test document'}
+            {testDocument ? testDocument.name : 'Use the last v1 history document'}
           </span>
-          <span className="mt-1 text-xs text-slate-400">PDF, PNG, or JPG up to 10MB</span>
+          <span className="mt-1 text-xs text-slate-400">The latest v1 document will be replayed through v2</span>
         </button>
         <input
           ref={fileInputRef}
@@ -67,7 +81,7 @@ const Step2ShadowRun = ({ onNext }: Step2ShadowRunProps) => {
           <p className="text-2xl font-bold text-white">{progress}%</p>
         </div>
         <p className="mt-4 text-sm text-slate-500">
-          {isRunning ? 'Replaying against historical documents…' : 'Ready to replay the workflow against historical documents'}
+          {isRunning ? 'Replaying the last v1 history document through v2…' : 'Ready to replay the last v1 history document through v2'}
         </p>
       </div>
 

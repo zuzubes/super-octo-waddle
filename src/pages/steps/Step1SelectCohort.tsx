@@ -9,7 +9,7 @@ interface Step1SelectWorkflowProps {
 const workflows = [
   { id: 'wf-001', name: 'Invoice Processing', version: 'v1', documents: '12,480 documents' },
   { id: 'wf-002', name: 'Purchase Order Matching', version: 'v1', documents: '8,240 documents' },
-  { id: 'wf-003', name: 'Employee Onboarding', version: 'v1', documents: '5,120 documents' },
+  { id: 'wf-003', name: 'Sales order management', version: 'v1', documents: '5,120 documents' },
   { id: 'wf-004', name: 'Expense Report Approval', version: 'v2', documents: '3,860 documents' },
 ];
 
